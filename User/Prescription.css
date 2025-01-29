@@ -1,0 +1,451 @@
+/* Import Parkinsans Font */
+@import url("https://fonts.googleapis.com/css2?family=Parkinsans:wght@300;400;500;600;700;800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Parkinsans", sans-serif;
+}
+
+body {
+  margin-top: 120px;
+  background-color: #e2e0e0;
+  color: #333;
+}
+
+/* Navbar Styling */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  background-color: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
+  font-size: 18px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.logo a {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 50px;
+  width: auto;
+  margin-left: 15px;
+}
+
+.nav-links a {
+  margin: 0 15px;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 500;
+  color: #47494b;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #0ab89e;
+}
+
+.login-button a {
+  text-decoration: none;
+  font-size: 20px;
+  color: white;
+  background-color: #0ab89e;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 50px;
+  font-weight: 500;
+  margin-right: 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.login-button a:hover {
+  background-color: #16ea7a;
+  color: white;
+}
+
+.form-container {
+  width: 60%;
+  margin: 30px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+}
+.form-header {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.logo {
+  max-width: 280px;
+}
+
+h1 {
+  color: #008080;
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 28px;
+}
+
+.sub-heading {
+  text-align: center;
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 25px;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 20px;
+  display: inline-block;
+  color: #555;
+}
+
+input[type="text"],
+input[type="file"],
+select,
+textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: 0.3s ease;
+}
+
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #00b8a9;
+  box-shadow: 0px 0px 5px rgba(0, 184, 169, 0.5);
+}
+
+.name-field {
+  display: flex;
+  justify-content: space-between;
+}
+
+.name-field input {
+  width: 48%;
+}
+
+.gender,
+.tumor-type {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+  margin: 10px 0;
+}
+
+.gender label,
+.tumor-type label {
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #555;
+}
+
+.gender input,
+.tumor-type input {
+  position: absolute;
+  opacity: 0;
+}
+
+.gender label::before,
+.tumor-type label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 18px;
+  height: 18px;
+  background-color: #fff;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.tumor-type label::before {
+  border-radius: 4px;
+}
+
+.gender input:checked + label::before,
+.tumor-type input:checked + label::before {
+  border-color: #00b8a9;
+  background-color: #00b8a9;
+}
+
+.gender input:checked + label::after,
+.tumor-type input:checked + label::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 7px;
+  width: 8px;
+  height: 8px;
+  background-color: #fff;
+  border-radius: 50%;
+}
+
+.tumor-type input:checked + label::after {
+  left: 4px;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+}
+
+textarea {
+  resize: none;
+  height: 120px;
+}
+
+.terms {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+}
+
+.terms input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-bottom: 20px;
+  margin-right: 10px;
+  accent-color: #00b8a9;
+}
+
+.generate-btn {
+  display: block;
+  width: 300px;
+  margin: 30px auto;
+  padding: 12px;
+  background: linear-gradient(to right, #00b8a9, #006666);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.generate-btn:hover {
+  background: linear-gradient(to right, #006666, #004d4d);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Default Generate PDF button (disabled state) */
+.generate-pdf-btn {
+  display: block;
+  width: 300px;
+  margin: 30px auto;
+  padding: 12px;
+  background: linear-gradient(
+    to right,
+    #b0bec5,
+    #78909c
+  ); /* Grayish gradient */
+  color: #e0e0e0;
+  border: none;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: not-allowed;
+  transition: all 0.3s ease;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  opacity: 0.6;
+}
+
+.user-icons a {
+  text-decoration: none;
+  font-size: 20px;
+  color: #0ab89e;
+  /* background-color: #0ab89e; */
+  /* padding: 10px 15px; */
+  border-radius: 50px;
+  font-weight: 500;
+  margin: 0 10px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.user-icons a:hover {
+  background-color: #0ab89e;
+  color: white;
+}
+
+/* Enabled state */
+.generate-pdf-btn.enabled {
+  background: linear-gradient(
+    to right,
+    #ff6b6b,
+    #d32f2f
+  ); /* Red-themed gradient */
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  opacity: 1;
+}
+
+.generate-pdf-btn.enabled:hover {
+  background: linear-gradient(to right, #d32f2f, #b71c1c);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Diagnosis Box */
+.diagnosis-box {
+  margin-top: 20px;
+  padding: 20px;
+  border: 2px solid #007bff;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.diagnosis-box h3 {
+  color: #007bff;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.diagnosis-box p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Image Preview Container */
+#imagePreview {
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#imagePreview img {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 5px;
+}
+
+/* Download Button Style */
+.download-btn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.download-btn:hover {
+  background-color: #218838;
+}
+
+/* Footer Styling */
+.footer {
+  background-color: #0ab89e;
+  color: white;
+  padding: 40px 20px;
+  font-family: "Parkinsans", sans-serif;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 30px;
+}
+
+.footer-logo img {
+  width: 250px;
+  height: auto;
+}
+
+.footer-links h3,
+.footer-social h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: white;
+  text-transform: uppercase;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links ul li {
+  margin-bottom: 10px;
+}
+
+.footer-links ul li a {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.footer-links ul li a:hover {
+  color: #555;
+}
+
+.footer-social .social-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.footer-social .social-icons a {
+  color: white;
+  font-size: 24px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.footer-social .social-icons a:hover {
+  color: #555;
+  transform: scale(1.2);
+}
+
+.footer-bottom {
+  border-top: 1px solid white;
+  padding-top: 15px;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.footer-bottom p {
+  font-size: 14px;
+  color: white;
+  margin: 0;
+}
