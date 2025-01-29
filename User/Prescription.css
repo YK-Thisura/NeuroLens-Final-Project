@@ -73,7 +73,8 @@ body {
 }
 
 .form-container {
-  width: 60%;
+  /* width: 60%; */
+  width: 800px;
   margin: 30px auto;
   padding: 30px;
   background-color: #ffffff;

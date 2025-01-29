@@ -186,6 +186,8 @@
         }
       }
 
+      // Generate PDF
+
       function generatePDF(event) {
         event.preventDefault();
 
@@ -254,43 +256,6 @@
           }
         });
       }
-
-      // function generatePDF(event) {
-      //   event.preventDefault();
-
-      //   const { jsPDF } = window.jspdf;
-      //   const formElement = document.querySelector(".form-container");
-
-      //   html2canvas(formElement, {
-      //     scale: 2, // Ensures high resolution
-      //     useCORS: true,
-      //     scrollX: 0,
-      //     scrollY: -window.scrollY,
-      //     windowWidth: document.documentElement.offsetWidth,
-      //     windowHeight: document.documentElement.scrollHeight,
-      //   }).then((canvas) => {
-      //     const imgData = canvas.toDataURL("image/png");
-      //     const pdf = new jsPDF("p", "mm", "a4");
-
-      //     // const pageWidth = 190; // A4 width in mm
-      //     const pageWidth = 450; // A4 width in mm
-      //     const pageHeight = 297; // A4 height in mm
-      //     const margin = 10; // Margin from edges
-
-      //     // Calculate new width & height while maintaining aspect ratio
-      //     let imgWidth = pageWidth - 2 * margin;
-      //     let imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-      //     // Scale down if image is larger than the page
-      //     if (imgHeight > pageHeight - 2 * margin) {
-      //       imgHeight = pageHeight - 2 * margin;
-      //       imgWidth = (canvas.width * imgHeight) / canvas.height;
-      //     }
-
-      //     pdf.addImage(imgData, "PNG", margin, margin, imgWidth, imgHeight);
-      //     pdf.save("Patient_Treatment_Plan.pdf");
-      //   });
-      // }
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   </head>
@@ -300,7 +265,7 @@
     <div class="navbar">
       <div class="logo">
         <a href="home.html">
-          <img src="../../Assest/logo.png" alt="Logo Image" />
+          <img src="../Assest/logo.png" alt="Logo Image" />
         </a>
       </div>
       <div class="nav-links">
@@ -324,7 +289,7 @@
 
     <div class="form-container">
       <div class="form-header">
-        <img src="../../Assest/preslogo.png" alt="Logo" class="logo" />
+        <img src="../Assest/preslogo.png" alt="Logo" class="logo" />
       </div>
 
       <h1>Patient Information Form</h1>
@@ -472,7 +437,7 @@
         <!-- Logo Section -->
         <div class="footer-logo">
           <a href="#">
-            <img src="../../Assest/footer logo.png" alt="Website Logo" />
+            <img src="../Assest/footer logo.png" alt="Website Logo" />
           </a>
         </div>
 
@@ -481,8 +446,8 @@
           <h3>Quick Links</h3>
           <ul>
             <li><a href="#about">MRI Scanner</a></li>
-            <li><a href="#model">Prescription</a></li>
-            <li><a href="#doc">Meet Your Doctor</a></li>
+            <li><a href="Prescription.html">Prescription</a></li>
+            <li><a href="myd.html">Meet Your Doctor</a></li>
           </ul>
         </div>
 
