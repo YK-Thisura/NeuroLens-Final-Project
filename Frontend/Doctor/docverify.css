@@ -1,0 +1,153 @@
+/* Import Parkinsans Font */
+@import url("https://fonts.googleapis.com/css2?family=Parkinsans:wght@300;400;500;600;700;800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Parkinsans", sans-serif;
+}
+
+body {
+  background-color: #e2e0e0;
+  color: #333;
+}
+
+.form-container {
+  width: 60%;
+  margin: 30px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-header {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.logo {
+  max-width: 280px;
+}
+
+h1 {
+  color: #008080;
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 28px;
+}
+
+.sub-heading {
+  text-align: center;
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 25px;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 20px;
+  display: inline-block;
+  color: #555;
+}
+
+input[type="text"],
+input[type="file"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: 0.3s ease;
+}
+
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #00b8a9;
+  box-shadow: 0px 0px 5px rgba(0, 184, 169, 0.5);
+}
+
+textarea {
+  resize: none;
+  height: 120px;
+}
+
+.submit-btn {
+  display: block;
+  width: 200px;
+  margin: 30px auto;
+  padding: 12px;
+  background: linear-gradient(to right, #00b8a9, #006666);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.submit-btn:hover {
+  background: linear-gradient(to right, #006666, #004d4d);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+input[type="text"],
+input[type="file"] {
+  width: 100%;
+}
+
+input[type="file"] {
+  padding: 12px;
+  background-color: #fff;
+}
+
+textarea {
+  margin-bottom: 20px;
+  padding: 12px;
+}
+
+textarea:focus {
+  border-color: #00b8a9;
+  box-shadow: 0px 0px 5px rgba(0, 184, 169, 0.5);
+}
+
+.image-container {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.image-container img {
+  max-width: 700px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+/* Custom Button for Print PDF */
+.submit-btn {
+  background: linear-gradient(to right, #00b8a9, #006666);
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 50px;
+  width: 260px;
+  margin: 30px auto;
+}
+
+.submit-btn:hover {
+  background: linear-gradient(to right, #006666, #004d4d);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
