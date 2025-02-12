@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="pending.css" />
+  <!-- Font Awesome CDN for Social Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+<body>
+  <div class="sidebar">
+    <div class="logo-container">
+      <a href="home.html">
+        <img src="../../Assest/admin.logo.png" alt="Logo" class="logo" />
+      </a>
+    </div>
+    <div class="divider"></div>
+    <ul>
+      <li><a href="pending.html">Pending Profiles</a></li>
+      <li><a href="managedoc.html">Manage Doctors</a></li>
+      <li><a href="manageuser.html">Manage Users</a></li>
+    </ul>
+
+    <!-- Small Image Between Links and Social Icons -->
+    <div class="sidebar-image">
+      <img src="Assest/admin_slid.png" alt="Small Image" class="small-image" />
+    </div>
+
+    <!-- Social Media Icons Below Sidebar -->
+    <div class="social-icons">
+      <a href="https://www.facebook.com" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.twitter.com" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
+      <a href="https://www.instagram.com" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.linkedin.com" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+  </div>
+  <div class="dashboard">
+    <h1>Manage Doctors</h1>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Doctor Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>John Doe</td>
+            <td>john.doe@example.com</td>
+            <td>
+              <div class="action-buttons">
+                <button class="approve-button">Create</button>
+                <button class="reject-button">View</button>
+                <button class="approve-button">Update</button>
+                <button class="reject-button">Delete</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Jane Smith</td>
+            <td>jane.smith@example.com</td>
+            <td>
+              <div class="action-buttons">
+                <button class="approve-button">Create</button>
+                <button class="reject-button">View</button>
+                <button class="approve-button">Update</button>
+                <button class="reject-button">Delete</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script src="managedoc.js"></script>
+
+</body>
+
+</html>
