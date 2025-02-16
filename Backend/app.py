@@ -53,3 +53,19 @@ def signup():
         return jsonify({"message": "User registered successfully"}), 201
     except mysql.connector.IntegrityError:
         return jsonify({"error": "Username or Email already exists"}), 400
+
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
+
+    cursor.execute("SELECT id, username, password FROM users WHERE email = %s", (email,))
+    user = cursor.fetchone()
+
+    if user and bcrypt.check_password_hash(user[2], password):
+        access_token = create_access_token(identity={'id': user[0], 'username': user[1], 'email': email})
+        return jsonify({"message": "Login successful", "access_token": access_token,"username": user[1]}), 200
+    else:
+        return jsonify({"error": "Invalid email or password"}), 401
+
