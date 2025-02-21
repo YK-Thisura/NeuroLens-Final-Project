@@ -69,3 +69,52 @@ def login():
     else:
         return jsonify({"error": "Invalid email or password"}), 401
 
+@app.route('/save_doctor', methods=['POST'])
+def save_doctor():
+    try:
+        data = request.form
+        image_file = request.files.get('mriScan')  # Handle file upload
+
+        print(data)
+
+        # Convert image to binary (BLOB)
+        image_blob = None
+        if image_file:
+            image_blob = image_file.read()  # Read image as binary
+
+        # Convert tumorType checkboxes to a comma-separated string
+        specializations = ", ".join(request.form.getlist('tumorType'))
+
+        # SQL Insert Query
+        sql = """
+        INSERT INTO doctors (first_name, last_name, image, gender, age, specialization, email, phone, country, qualification, description)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        """
+        values = (
+            data.get('firstName'),
+            data.get('lastName'),
+            image_blob,  # Store as BLOB
+            data.get('gender'),
+            int(data.get('age')),
+            specializations,
+            data.get('email'),
+            data.get('phone'),
+            data.get('country'),
+            data.get('phd'),
+            data.get('history')
+        )
+
+        cursor.execute(sql, values)
+        db.commit()
+
+        return jsonify({'message': 'Doctor profile saved successfully!'}), 201
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+def add_padding(base64_string):
+    # Add necessary padding to the base64 string if missing
+    padding = len(base64_string) % 4
+    if padding:
+        base64_string += '=' * (4 - padding)
+    return base64_string
