@@ -118,3 +118,49 @@ def add_padding(base64_string):
     if padding:
         base64_string += '=' * (4 - padding)
     return base64_string
+
+
+@app.route('/get_all_doctors_gig', methods=['GET'])
+def get_all_doctors():
+    try:
+        cursor.execute("SELECT * FROM doctors")
+        doctors = cursor.fetchall()
+
+        doctor_list = []
+        for doctor in doctors:
+            image_data = doctor[3]  # Assuming the image is stored in the 3rd column
+            
+            # Ensure the image data is in bytes
+            if isinstance(image_data, str):
+                # If the image data is base64 encoded already, decode it
+                image_data = add_padding(image_data)  # Add padding if necessary
+                image_data = base64.b64decode(image_data)  # Decode from base64 to bytes
+            elif isinstance(image_data, bytes):
+                # If it's already in bytes, no need to decode
+                pass
+            else:
+                image_data = None  # Handle cases where there is no image
+
+            if image_data:
+                # Convert image data to base64 (assuming it's in bytes now)
+                image_base64 = base64.b64encode(image_data).decode('utf-8')
+            else:
+                image_base64 = None  # In case there is no image data
+
+            doctor_data = {
+                'id': doctor[0],
+                'email': doctor[7],
+                'status': doctor[13],
+                'first_name': doctor[1],
+                'last_name': doctor[2],
+                'image': image_base64,  # Base64 encoded image
+                'specialization': doctor[6],
+                'description': doctor[11],
+                'country': doctor[9],
+            }
+            doctor_list.append(doctor_data)
+
+        return jsonify({'doctors': doctor_list}), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
