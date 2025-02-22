@@ -276,3 +276,24 @@ def update_doctor_status():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+@app.route('/users/doctors', methods=['GET'])
+def get_doctor_users():
+    try:
+
+        cursor.execute("SELECT id, username, email FROM users WHERE email LIKE 'dr.%' ORDER BY id ASC")
+        users = cursor.fetchall()
+
+        doctor_list = []
+        for user in users:
+            doctor_data = {
+                'id': user[0],
+                'username': user[1],
+                'email': user[2],
+            }
+            doctor_list.append(doctor_data)
+
+        return jsonify({'doctors': doctor_list}), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
