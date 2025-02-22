@@ -251,3 +251,28 @@ def get_doctor_by_id(doctor_id):
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+    
+@app.route('/update_doctor_status', methods=['POST'])
+def update_doctor_status():
+    try:
+        # Get data from the POST request
+        data = request.get_json()
+        doctor_id = data.get('id')
+        action = data.get('action')  # Action can be 'approve' or 'reject'
+
+        # Validate input
+        if doctor_id is None or action not in ['approve', 'reject']:
+            return jsonify({'error': 'Invalid data provided'}), 400
+
+        # Update the status of the doctor in the database
+        status = 'approved' if action == 'approve' else 'rejected'
+        
+        # Execute the update query
+        cursor.execute("UPDATE doctors SET status = %s WHERE id = %s", (status, doctor_id))
+        db.commit()
+
+        return jsonify({'message': f'Doctor profile {status} successfully.'}), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
