@@ -297,3 +297,30 @@ def get_doctor_users():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+@app.route('/users/doctors/<int:user_id>', methods=['PUT'])
+def update_doctor_user(user_id):
+    try:
+        data = request.get_json()
+        username = data.get('username')
+        email = data.get('email')
+
+        print(data)
+
+        # Ensure the new email still starts with 'dr.'
+        if email and not email.lower().startswith("dr."):
+            return jsonify({'error': "Email must start with 'dr.'"}), 400
+
+        cursor.execute("SELECT email FROM users WHERE id = %s", (user_id,))
+        user = cursor.fetchone()
+        
+        if not user or not user[0].lower().startswith("dr."):
+            return jsonify({'error': "Doctor user not found"}), 404
+
+        cursor.execute("UPDATE users SET username = %s, email = %s WHERE id = %s", (username, email, user_id))
+        db.commit()
+
+        return jsonify({'message': 'Doctor user updated successfully'}), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
