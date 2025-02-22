@@ -209,3 +209,45 @@ def get_approved_doctors():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+@app.route('/get_doctor/<int:doctor_id>', methods=['GET'])
+def get_doctor_by_id(doctor_id):
+    try:
+        cursor.execute("SELECT * FROM doctors WHERE id = %s AND status = 'approved'", (doctor_id,))
+        doctor = cursor.fetchone()
+
+        if not doctor:
+            return jsonify({'error': 'Doctor not found'}), 404
+
+        image_data = doctor[3]  # Assuming the image is in the 3rd column
+
+        # Ensure the image data is in bytes
+        if isinstance(image_data, str):
+            image_data = add_padding(image_data)  # Add padding if necessary
+            image_data = base64.b64decode(image_data)  # Decode from base64 to bytes
+        elif isinstance(image_data, bytes):
+            pass
+        else:
+            image_data = None  # Handle cases where there is no image
+
+        image_base64 = base64.b64encode(image_data).decode('utf-8') if image_data else None
+
+        doctor_data = {
+            'id': doctor[0],
+            'email': doctor[7],
+            'age': doctor[5],
+            'gender': doctor[8],
+            'contact': doctor[4],
+            'qualification': doctor[10],
+            'first_name': doctor[1],
+            'last_name': doctor[2],
+            'image': image_base64,  # Base64 encoded image
+            'specialization': doctor[6],
+            'description': doctor[11],
+            'country': doctor[9],
+        }
+
+        return jsonify(doctor_data), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
