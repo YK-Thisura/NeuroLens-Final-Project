@@ -324,3 +324,20 @@ def update_doctor_user(user_id):
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+@app.route('/users/doctors/<int:user_id>', methods=['DELETE'])
+def delete_doctor_user(user_id):
+    try:
+        cursor.execute("SELECT email FROM users WHERE id = %s", (user_id,))
+        user = cursor.fetchone()
+
+        if not user or not user[0].lower().startswith("dr."):
+            return jsonify({'error': "Doctor user not found"}), 404
+
+        cursor.execute("DELETE FROM users WHERE id = %s", (user_id,))
+        db.commit()
+
+        return jsonify({'message': 'Doctor user deleted successfully'}), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
