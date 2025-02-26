@@ -341,3 +341,24 @@ def delete_doctor_user(user_id):
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+
+@app.route('/users', methods=['GET'])
+def get_all_users():
+    try:
+        cursor.execute("SELECT id, username, email FROM users WHERE email NOT LIKE 'dr.%' ORDER BY id ASC")
+        users = cursor.fetchall()
+
+        user_list = []
+        for user in users:
+            user_data = {
+                'id': user[0],
+                'username': user[1],
+                'email': user[2],
+            }
+            user_list.append(user_data)
+
+        return jsonify({'users': user_list}), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
