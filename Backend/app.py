@@ -362,3 +362,24 @@ def get_all_users():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+@app.route('/users/<int:user_id>', methods=['PUT'])
+def update_user(user_id):
+    try:
+        data = request.get_json()
+        username = data.get('username')
+        email = data.get('email')
+
+        cursor.execute("SELECT email FROM users WHERE id = %s", (user_id,))
+        user = cursor.fetchone()
+
+        if not user:
+            return jsonify({'error': "User not found"}), 404
+
+        cursor.execute("UPDATE users SET username = %s, email = %s WHERE id = %s", (username, email, user_id))
+        db.commit()
+
+        return jsonify({'message': 'User updated successfully'}), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
