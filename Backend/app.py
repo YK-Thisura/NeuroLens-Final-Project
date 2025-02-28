@@ -400,3 +400,41 @@ def delete_user(user_id):
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+# Function to check allowed file types
+def allowed_file(filename):
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
+# API Endpoint to Upload Prescription
+@app.route("/upload_prescription", methods=["POST"])
+def upload_prescription():
+    if "prescription" not in request.files:
+        return jsonify({"error": "No file part"}), 400
+
+    file = request.files["prescription"]
+    doctor_id = request.form.get("doctor_id")  # Assuming doctor_id is sent in form data
+
+    if not doctor_id:
+        return jsonify({"error": "Doctor ID is required"}), 400
+
+    if file.filename == "":
+        return jsonify({"error": "No selected file"}), 400
+
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+        file.save(file_path)
+
+        # Save file path in MySQL database
+        try:
+        
+            query = "INSERT INTO prescriptions (doctor_id, file_path) VALUES (%s, %s)"
+            cursor.execute(query, (doctor_id, file_path))
+            db.commit()
+
+            return jsonify({"message": "File uploaded successfully", "file_path": file_path}), 200
+
+        except mysql.connector.Error as err:
+            return jsonify({"error": f"Database error: {err}"}), 500
+
+    return jsonify({"error": "Invalid file type. Only PDFs are allowed."}), 400
