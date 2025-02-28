@@ -457,3 +457,37 @@ def get_prescriptions():
         prescriptions_list.append(prescriptions_data)
 
     return jsonify({'prescriptions': prescriptions_list}), 200
+
+@app.route('/save_prescription', methods=['POST'])
+def save_prescription():
+    try:
+        # Retrieve form data
+        patient_id = request.form['patientId']
+        patient_name = request.form['patientName']
+        description = request.form['description']
+        
+        # Handle file upload
+        if 'patientFile' not in request.files:
+            return jsonify({"error": "No file part"}), 400
+        file = request.files['patientFile']
+        if file.filename == '':
+            return jsonify({"error": "No selected file"}), 400
+
+        # Save the file securely
+        filename = secure_filename(file.filename)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(file_path)
+
+        # Insert data into doctort_approvel table
+        query = """
+            INSERT INTO doctort_approval (patient_id, patient_name, description, file_path)
+            VALUES (%s, %s, %s, %s)
+        """
+        cursor.execute(query, (patient_id, patient_name, description, file_path))
+        db.commit()
+
+        return jsonify({"message": "Doctor approval details saved successfully!"}), 200
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({"error": "An error occurred while saving the doctor approval details."}), 500
