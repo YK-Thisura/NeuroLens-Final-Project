@@ -383,3 +383,20 @@ def update_user(user_id):
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+@app.route('/users/<int:user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    try:
+        cursor.execute("SELECT id FROM users WHERE id = %s", (user_id,))
+        user = cursor.fetchone()
+
+        if not user:
+            return jsonify({'error': "User not found"}), 404
+
+        cursor.execute("DELETE FROM users WHERE id = %s", (user_id,))
+        db.commit()
+
+        return jsonify({'message': 'User deleted successfully'}), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
