@@ -438,3 +438,22 @@ def upload_prescription():
             return jsonify({"error": f"Database error: {err}"}), 500
 
     return jsonify({"error": "Invalid file type. Only PDFs are allowed."}), 400
+
+@app.route('/get_prescriptions', methods=['GET'])
+def get_prescriptions():
+
+    # cursor = db.cursor(dictionary=True)  # Enables dict format
+    cursor.execute("SELECT * FROM prescriptions")
+    prescriptions = cursor.fetchall()
+
+    prescriptions_list = []
+    for pres in prescriptions:
+
+        prescriptions_data = {
+                    'doctor_id': pres[1],
+                    'file_path':  os.path.basename(pres[2]),
+                    'uploaded_at': pres[3],
+        }
+        prescriptions_list.append(prescriptions_data)
+
+    return jsonify({'prescriptions': prescriptions_list}), 200
