@@ -491,3 +491,21 @@ def save_prescription():
     except Exception as e:
         print(f"Error: {e}")
         return jsonify({"error": "An error occurred while saving the doctor approval details."}), 500
+
+
+@app.route('/get_approval_notes', methods=['GET'])
+def get_approval_notes():
+    cursor.execute("SELECT * FROM doctort_approval")
+    approval_notes = cursor.fetchall()
+    
+    notes = []
+    for note in approval_notes:
+        notes.append({
+            'patient_name': note[2],
+            'created_at': note[5],
+            'download_url': f"http://127.0.0.1:5000/download/{os.path.basename(note[4])}"
+        })
+
+    # Return the approval notes in a JSON format
+    return jsonify({"notes": notes}), 200
+
