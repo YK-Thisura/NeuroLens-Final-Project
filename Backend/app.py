@@ -509,3 +509,27 @@ def get_approval_notes():
     # Return the approval notes in a JSON format
     return jsonify({"notes": notes}), 200
 
+
+@app.route("/download/<filename>", methods=["GET"])
+def download_file(filename):
+    try:
+        # Ensure filename doesn't contain directory traversal characters
+        safe_filename = os.path.basename(filename)  
+
+        # Construct full file path
+        file_path = os.path.join(app.config["UPLOAD_FOLDER"], safe_filename)
+        print(f"Checking file path: {file_path}")  # Debugging print
+
+        # Check if file exists
+        if not os.path.isfile(file_path):
+            return jsonify({"error": f"File not found: {file_path}"}), 404
+
+        # Serve file using `send_file`
+        return send_file(file_path, as_attachment=True)
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+    
+if __name__ == '__main__':
+    app.run(debug=True)
