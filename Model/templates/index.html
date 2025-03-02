@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Brain Tumor Detection</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Parkinsans", sans-serif;
+      }
+
+      body {
+        background-color: #d4f3eb;
+        text-align: center;
+        color: #2c3e50;
+        margin-top: 100px;
+      }
+      .result strong {
+        color: #0ab89e;
+        font-weight: bold;
+      }
+
+      h1 {
+        color: #2c3e50;
+        font-weight: 700;
+      }
+      h2 {
+        color: #0ab89e;
+        margin-top: 20px;
+      }
+
+      /* Navbar Styling */
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 30px;
+        background-color: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
+        font-size: 18px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+      }
+
+      .logo a {
+        display: flex;
+        align-items: center;
+      }
+
+      .logo img {
+        height: 50px;
+        width: auto;
+        margin-left: 15px;
+      }
+
+      .nav-links a {
+        margin: 0 15px;
+        text-decoration: none;
+        font-size: 20px;
+        font-weight: 500;
+        color: #47494b;
+        transition: color 0.3s ease;
+      }
+
+      .nav-links a:hover {
+        color: #0ab89e;
+      }
+
+      .login-button a {
+        text-decoration: none;
+        font-size: 20px;
+        color: white;
+        background-color: #0ab89e;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 50px;
+        font-weight: 500;
+        margin-right: 20px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      .login-button a:hover {
+        background-color: #16ea7a;
+        color: white;
+      }
+
+      #upload-form {
+        border: 2px dashed #0ab89e;
+        padding: 30px;
+        background-color: #fff;
+        border-radius: 10px;
+        display: inline-block;
+        cursor: pointer;
+        transition: 0.3s;
+        margin-top: 50px;
+      }
+
+      #upload-form:hover {
+        background-color: #e3f2fd;
+      }
+
+      .btn {
+        background-color: #0ab89e;
+        color: #fff;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .btn:hover {
+        background-color: #16ea7a;
+      }
+
+      .image-frame {
+        width: 320px;
+        height: 320px;
+        border: 4px solid #0ab89e;
+        display: flex;
+        color: #333;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        margin: 20px auto;
+        border-radius: 10px;
+        background-color: #fff;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .result {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+        margin-top: 20px;
+        margin-bottom: 40px;
+        background-color: #fff;
+        display: inline-block;
+        padding: 15px 20px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+      }
+
+      /* Footer Styling */
+      .footer {
+        background-color: #0ab89e;
+        color: white;
+        padding: 40px 20px;
+        font-family: "Parkinsans", sans-serif;
+        margin: 0;
+        flex-shrink: 0;
+      }
+
+      .footer-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        max-width: 1200px;
+        margin: 0 auto;
+        gap: 30px;
+      }
+
+      .footer-logo img {
+        width: 250px;
+        height: auto;
+      }
+
+      .footer-links h3,
+      .footer-social h3 {
+        font-size: 18px;
+        margin-bottom: 15px;
+        color: white;
+        text-transform: uppercase;
+      }
+
+      .footer-links ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .footer-links ul li {
+        margin-bottom: 10px;
+      }
+
+      .footer-links ul li a {
+        text-decoration: none;
+        color: white;
+        font-size: 16px;
+        transition: color 0.3s ease;
+      }
+
+      .footer-links ul li a:hover {
+        color: #555;
+      }
+
+      .footer-social .social-icons {
+        display: flex;
+        gap: 15px;
+      }
+
+      .footer-social .social-icons a {
+        color: white;
+        font-size: 24px;
+        transition: color 0.3s ease, transform 0.3s ease;
+      }
+
+      .footer-social .social-icons a:hover {
+        color: #555;
+        transform: scale(1.2);
+      }
+
+      .footer-bottom {
+        border-top: 1px solid white;
+        padding-top: 15px;
+        text-align: center;
+        margin-top: 30px;
+      }
+
+      .footer-bottom p {
+        font-size: 14px;
+        color: white;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar Section -->
+    <div class="navbar">
+      <div class="logo">
+        <a href="home.html">
+          <img src="../../Assest/logo.png" alt="Logo Image" />
+        </a>
+      </div>
+      <div class="nav-links">
+        <a href="#about">MRI Scanner</a>
+        <a href="Prescription.html">Prescription</a>
+        <a href="myd.html">Meet Your Doctor</a>
+      </div>
+      <div class="user-icons" id="userIcons">
+        <a href="../User/udashboard.html" id="profileIcon"
+          ><i class="fas fa-user"></i
+        ></a>
+        <a href="../Doctor/docdashboard.html" id="doctorIcon"
+          ><i class="fas fa-user-md"></i
+        ></a>
+        <a href="#" id="logoutButton"><i class="fas fa-sign-out-alt"></i></a>
+      </div>
+      <div class="login-button" id="loginButton">
+        <a href="../Login/login.html">Login</a>
+      </div>
+    </div>
+
+    <h1>Scan Your MRI</h1>
+    <form
+      id="upload-form"
+      action="/"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      <input type="file" name="file" accept="image/*" required />
+      <br /><br />
+      <button type="submit" class="btn">Predict</button>
+    </form>
+
+    {% if image_path %}
+    <h2>Uploaded Image</h2>
+    <div class="image-frame">
+      <img src="{{ image_path }}" alt="Uploaded Image" />
+    </div>
+    <div class="result">
+      <p>Predicted Tumor Type : <strong>{{ prediction }}</strong></p>
+      <p>Confidence Score : <strong>{{ confidence }}%</strong></p>
+    </div>
+    {% endif %}
+
+    <!-- Footer -->
+    <!-- Footer Section -->
+    <footer class="footer">
+      <div class="footer-container">
+        <!-- Logo Section -->
+        <div class="footer-logo">
+          <a href="#">
+            <img src="../../Assest/footer logo.png" alt="Website Logo" />
+          </a>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#about">MRI Scanner</a></li>
+            <li><a href="#model">Prescription</a></li>
+            <li><a href="#doc">Meet Your Doctor</a></li>
+          </ul>
+        </div>
+
+        <!-- Social Media -->
+        <div class="footer-social">
+          <h3>Follow Us</h3>
+          <div class="social-icons">
+            <a href="https://www.google.com" target="_blank"
+              ><i class="fab fa-google"></i
+            ></a>
+            <a href="https://www.twitter.com" target="_blank"
+              ><i class="fab fa-twitter"></i
+            ></a>
+            <a href="https://www.facebook.com" target="_blank"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="https://www.linkedin.com" target="_blank"
+              ><i class="fab fa-linkedin-in"></i
+            ></a>
+            <a href="https://www.github.com" target="_blank"
+              ><i class="fab fa-github"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>
+          &copy; 2024 NeuroLens. All rights reserved. | Designed and Developed
+          by Theekshana Thisura
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
