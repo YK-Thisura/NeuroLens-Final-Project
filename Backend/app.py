@@ -1,13 +1,18 @@
 #import Necessary Libraries
 
 import base64
-from flask import Flask, request, jsonify,send_file
+from flask import Flask, request, jsonify,send_file,render_template
 import os
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 import mysql.connector
 from flask_cors import CORS  
 from werkzeug.utils import secure_filename
+from tensorflow.keras.preprocessing import image
+import tensorflow as tf
+import numpy as np
+
+
 
 app = Flask(__name__)
 CORS(app)
@@ -16,6 +21,17 @@ bcrypt = Bcrypt(app)
 app.config['JWT_SECRET_KEY'] = 'your_secret_key'  # Change this to a strong secret key
 jwt = JWTManager(app)
 
+# Load the trained model
+model = tf.keras.models.load_model("brain_tumor_model.h5")
+
+# Define class labels
+class_labels = ["Glioma", "Meningioma", "Notumor", "Pituitary"]
+
+# Set the upload folder
+ML_UPLOAD_FOLDER = "static/ml_uploads"
+app.config["ML_UPLOAD_FOLDER"] = ML_UPLOAD_FOLDER
+
+
 # Configure upload folder
 UPLOAD_FOLDER = "uploads"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
@@ -23,6 +39,7 @@ ALLOWED_EXTENSIONS = {"pdf"}
 
 # Ensure upload folder exists
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+os.makedirs(ML_UPLOAD_FOLDER, exist_ok=True)
 
 # MySQL Database Configuration
 db = mysql.connector.connect(
@@ -32,6 +49,49 @@ db = mysql.connector.connect(
     database="neuro_db"
 )
 cursor = db.cursor()
+
+
+def predict_tumor(img_path):
+    """Function to predict tumor type from MRI image"""
+    img = image.load_img(img_path, target_size=(128, 128))
+    img_array = image.img_to_array(img) / 255.0
+    img_array = np.expand_dims(img_array, axis=0)
+
+    predictions = model.predict(img_array)
+    predicted_class = class_labels[np.argmax(predictions)]
+    confidence = np.max(predictions) * 100
+
+    return predicted_class, confidence
+
+@app.route("/prediction", methods=["GET", "POST"])
+def upload_file():
+    if request.method == "POST":
+        if "file" not in request.files:
+            return render_template("index.html", message="No file uploaded")
+
+        file = request.files["file"]
+        if file.filename == "":
+            return render_template("index.html", message="No selected file")
+
+        if file:
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(app.config["ML_UPLOAD_FOLDER"], filename)
+            file.save(file_path)
+
+            # Predict tumor type
+            tumor_type, confidence = predict_tumor(file_path)
+
+            # return render_template("index.html", 
+            #                        image_path=f"/static/uploads/{filename}", 
+            #                        prediction=tumor_type, 
+            #                        confidence=confidence)
+
+            return render_template("index.html", 
+                                   image_path=file_path, 
+                                   prediction=tumor_type, 
+                                   confidence=confidence)
+
+    return render_template("index.html")
 
 
 @app.route('/signup', methods=['POST'])
