@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Doctor's Information Form</title>
+  <link rel="stylesheet" href="docform.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-content">
+      <div class="logo1">
+        <a href="index.html">
+          <img src="../../Assest/footer logo.png" alt="Logo" />
+        </a>
+      </div>
+      <div class="profile-section">
+        <div class="profile-image">
+          <img src="../../Assest/doctor.png" alt="Profile Image" />
+        </div>
+        <h2>Dr.Theekshana Thisura</h2>
+        <p1>Welcome To Your Personalized Space</p1>
+      </div>
+    </div>
+  </header>
+  <div class="form-container">
+    <div class="form-header">
+      <img src="../../Assest/preslogo.png" alt="Logo" class="logo" />
+    </div>
+
+    <h1>Doctor's Information Form</h1>
+    <p class="sub-heading">
+      Please ensure that all required fields are filled out prior to creating
+      the gig
+    </p>
+
+    <!-- <form action="#" method="post" enctype="multipart/form-data"> -->
+    <form id="doctorForm">
+      <!-- Doctor Name -->
+      <label for="firstName">Doctor's Name</label>
+      <div class="name-field">
+        <input type="text" id="firstName" name="firstName" placeholder="First Name" required />
+        <input type="text" id="lastName" name="lastName" placeholder="Last Name" required />
+      </div>
+
+      <!-- MRI Scan -->
+      <label for="mriScan">Doctor's Image </label>
+      <input type="file" id="mriScan" name="mriScan" />
+
+      <!-- Gender -->
+      <label>Doctor's Gender</label>
+      <div class="gender">
+        <input type="radio" id="male" name="gender" value="Male" />
+        <label for="male">Male</label>
+
+        <input type="radio" id="female" name="gender" value="Female" />
+        <label for="female">Female</label>
+
+        <input type="radio" id="other" name="gender" value="Other" />
+        <label for="other">Other</label>
+      </div>
+
+      <!-- Age -->
+      <label for="age">Doctor's Age</label>
+      <input type="number" id="age" name="age" placeholder="Age" required />
+
+      <!-- Tumor Type -->
+      <label>Doctor's Specialization</label>
+      <div class="tumor-type">
+        <input type="checkbox" id="glioma" name="tumorType" value="Glioma" />
+        <label for="glioma">Glioma</label>
+
+        <input type="checkbox" id="meningioma" name="tumorType" value="Meningioma" />
+        <label for="meningioma">Meningioma</label>
+
+        <input type="checkbox" id="pituitary" name="tumorType" value="Pituitary" />
+        <label for="pituitary">Pituitary</label>
+      </div>
+
+      <!-- Email -->
+      <label for="email">Doctor's Email</label>
+      <input type="email" id="email" name="email" placeholder="Email" required />
+
+      <!-- Phone -->
+      <label for="phone">Doctor's Contact Number</label>
+      <input type="tel" id="phone" name="phone" placeholder="Contact Number" required />
+
+      <!-- Country -->
+      <label for="country">Doctor's Country</label>
+      <input type="text" id="country" name="country" placeholder="Country" required />
+
+      <!-- PhD -->
+      <label for="phd">Doctor's Highest Qualification</label>
+      <input type="text" id="phd" name="phd" placeholder="Qualification" required />
+
+      <!-- Description -->
+      <label for="history">Doctor's Description</label>
+      <textarea id="history" name="history" rows="4" required></textarea>
+
+      <!-- Terms and Conditions -->
+      <div class="terms">
+        <input type="checkbox" id="terms" name="terms" required />
+        <label for="terms">I accept the Terms and Conditions.</label>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="submit-btn">Submit</button>
+    </form>
+  </div>
+  <script src="docform.js"></script>
+</body>
+
+</html>

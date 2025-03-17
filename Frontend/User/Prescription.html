@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Patient Information Form</title>
+    <link rel="stylesheet" href="Prescription.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script>
+      // Image Preview
+
+      function displayImage(event) {
+        const file = event.target.files[0]; // Get the selected file
+        const imagePreview = document.getElementById("imagePreview"); // Image preview container
+
+        if (file) {
+          const reader = new FileReader();
+
+          reader.onload = function (e) {
+            // Display the image
+            imagePreview.innerHTML = `<img src="${e.target.result}" alt="Selected MRI Scan">`;
+          };
+
+          reader.readAsDataURL(file);
+        } else {
+          // Clear the preview if no file is selected
+          imagePreview.innerHTML = "";
+        }
+      }
+
+      // Tratment Plan Logic
+
+      function generateTreatmentPlan(event) {
+        event.preventDefault(); // Prevent form submission
+
+        // Capture form data
+        const age = document.getElementById("age").value;
+        const gender = document.querySelector(
+          'input[name="gender"]:checked'
+        )?.value;
+        const tumorTypes = Array.from(
+          document.querySelectorAll('input[name="tumorType"]:checked')
+        ).map((input) => input.value);
+
+        // Treatment logic
+        let treatmentPlan = "Please fill all necessary details.";
+
+        if (age !== "select" && gender && tumorTypes.length > 0) {
+          treatmentPlan = ""; // Reset treatmentPlan
+
+          tumorTypes.forEach((tumor) => {
+            // Glioma Treatments
+            if (tumor === "Glioma") {
+              if (age === "0-12") {
+                treatmentPlan += `For a child with Glioma, consult a pediatric oncologist and plan an MRI follow-up.\n`;
+                if (gender === "Male")
+                  treatmentPlan += `  Special consideration: Pediatric neurology for boys.\n`;
+                if (gender === "Female")
+                  treatmentPlan += `  Special consideration: Hormonal assessment for girls.\n`;
+              } else if (age === "13-18") {
+                treatmentPlan += `For a teen with Glioma, consider radiation therapy and a follow-up scan.\n`;
+                if (gender === "Male")
+                  treatmentPlan += `  Special consideration: Monitor aggressive growth patterns in boys.\n`;
+                if (gender === "Female")
+                  treatmentPlan += `  Special consideration: Support with hormone stabilization during puberty.\n`;
+              } else if (age === "19-30") {
+                treatmentPlan += `For a young adult with Glioma, surgical resection followed by chemotherapy is advised.\n`;
+                if (gender === "Male")
+                  treatmentPlan += `  Special consideration: Higher risk of recurrence in males.\n`;
+                if (gender === "Female")
+                  treatmentPlan += `  Special consideration: Fertility preservation counseling for females.\n`;
+              } else if (age === "31-45") {
+                treatmentPlan += `For an adult with Glioma, advanced imaging and targeted therapy are recommended.\n`;
+                if (gender === "Male")
+                  treatmentPlan += `  Special consideration: Evaluate cognitive impairments specific to males.\n`;
+                if (gender === "Female")
+                  treatmentPlan += `  Special consideration: Monitor for hormonal imbalances in females.\n`;
+              } else if (age === "46+") {
+                treatmentPlan += `For a senior with Glioma, palliative care and low-dose chemotherapy are considered.\n`;
+                if (gender === "Male")
+                  treatmentPlan += `  Special consideration: Evaluate co-morbidities like hypertension in males.\n`;
+                if (gender === "Female")
+                  treatmentPlan += `  Special consideration: Manage osteoporosis or bone fragility in females.\n`;
+              }
+            }
+
+            // Meningioma Treatments
+            if (tumor === "Meningioma") {
+              if (age === "0-12") {
+                treatmentPlan += `For a child with Meningioma, early surgical intervention is recommended.\n`;
+                if (gender === "Male")
+                  treatmentPlan += `  Special consideration: Pediatric neurosurgery expertise for boys.\n`;
+                if (gender === "Female")
+                  treatmentPlan += `  Special consideration: Evaluate girls for developmental delays.\n`;
+              } else if (age === "13-18") {
+                treatmentPlan += `For a teen with Meningioma, focus on observation or minimally invasive surgery.\n`;
+                if (gender === "Male")
+                  treatmentPlan += `  Special consideration: Monitor bone growth effects in boys.\n`;
+                if (gender === "Female")
+                  treatmentPlan += `  Special consideration: Hormonal therapy may benefit girls.\n`;
+              } else if (age === "19-30") {
+                treatmentPlan += `For a young adult with Meningioma, radiation therapy or surgical removal is suggested.\n`;
+                if (gender === "Male")
+                  treatmentPlan += `  Special consideration: Assess occupational impacts on males.\n`;
+                if (gender === "Female")
+                  treatmentPlan += `  Special consideration: Plan pregnancy-safe therapies if required.\n`;
+              } else if (age === "31-45") {
+                treatmentPlan += `For an adult with Meningioma, surgical intervention or radiation is advised.\n`;
+                if (gender === "Male")
+                  treatmentPlan += `  Special consideration: Review fitness for strenuous activity.\n`;
+                if (gender === "Female")
+                  treatmentPlan += `  Special consideration: Monitor for hormonal interactions with therapies.\n`;
+              } else if (age === "46+") {
+                treatmentPlan += `For a senior with Meningioma, non-invasive treatments like proton therapy are recommended.\n`;
+                if (gender === "Male")
+                  treatmentPlan += `  Special consideration: Prioritize cardiovascular health for males.\n`;
+                if (gender === "Female")
+                  treatmentPlan += `  Special consideration: Bone health considerations for elderly females.\n`;
+              }
+            }
+
+            // Pituitary Tumor Treatments
+            if (tumor === "Pituitary") {
+              if (age === "0-12") {
+                treatmentPlan += `For a child with Pituitary tumor, hormonal therapy evaluation is suggested.\n`;
+                if (gender === "Male")
+                  treatmentPlan += `  Special consideration: Evaluate for stunted growth in boys.\n`;
+                if (gender === "Female")
+                  treatmentPlan += `  Special consideration: Hormonal therapy tailored for girls.\n`;
+              } else if (age === "13-18") {
+                treatmentPlan += `For a teen with Pituitary tumor, hormonal and vision assessments are recommended.\n`;
+                if (gender === "Male")
+                  treatmentPlan += `  Special consideration: Testosterone imbalance monitoring for boys.\n`;
+                if (gender === "Female")
+                  treatmentPlan += `  Special consideration: Address potential menstrual disruptions.\n`;
+              } else if (age === "19-30") {
+                treatmentPlan += `For a young adult with Pituitary tumor, evaluate for transsphenoidal surgery.\n`;
+                if (gender === "Male")
+                  treatmentPlan += `  Special consideration: Higher risk of vision loss in males.\n`;
+                if (gender === "Female")
+                  treatmentPlan += `  Special consideration: Pregnancy-safe planning for females.\n`;
+              } else if (age === "31-45") {
+                treatmentPlan += `For an adult with Pituitary tumor, hormonal therapy and surgery are common options.\n`;
+                if (gender === "Male")
+                  treatmentPlan += `  Special consideration: Monitor for sleep apnea in males.\n`;
+                if (gender === "Female")
+                  treatmentPlan += `  Special consideration: Manage prolactin imbalance for females.\n`;
+              } else if (age === "46+") {
+                treatmentPlan += `For a senior with Pituitary tumor, regular monitoring and minimal surgery are suggested.\n`;
+                if (gender === "Male")
+                  treatmentPlan += `  Special consideration: Evaluate for coexisting diabetes in males.\n`;
+                if (gender === "Female")
+                  treatmentPlan += `  Special consideration: Post-menopause hormone therapy for females.\n`;
+              }
+            }
+
+            // No Tumor Detected
+            if (tumor === "No Tumor") {
+              treatmentPlan += `No tumor detected. Suggest routine health checkups and a balanced lifestyle.\n`;
+              if (gender === "Male")
+                treatmentPlan += `  Special consideration: Encourage regular physical activity for males.\n`;
+              if (gender === "Female")
+                treatmentPlan += `  Special consideration: Focus on calcium and vitamin D intake for females.\n`;
+            }
+          });
+        }
+
+        // Update UI with treatment plan
+        const resultDiv = document.getElementById("treatmentResult");
+        const diagnosisText = document.getElementById("diagnosisText");
+
+        if (treatmentPlan) {
+          diagnosisText.textContent = treatmentPlan;
+          resultDiv.style.display = "block";
+          const pdfBtn = document.getElementById("generatePdfBtn");
+          pdfBtn.disabled = false;
+          pdfBtn.classList.add("enabled");
+        } else {
+          resultDiv.style.display = "none";
+        }
+      }
+
+      // Generate PDF
+
+      function generatePDF(event) {
+        event.preventDefault();
+
+        const { jsPDF } = window.jspdf;
+        const formElement = document.querySelector(".form-container");
+
+        html2canvas(formElement, {
+          scale: 2, // Ensures high resolution
+          useCORS: true, // Enable CORS support for external content
+          scrollX: 0,
+          scrollY: -window.scrollY,
+          windowWidth: document.documentElement.offsetWidth,
+          windowHeight: document.documentElement.scrollHeight,
+          onclone: (document) => {
+            // Ensure external images have cross-origin headers set
+            const images = document.querySelectorAll("img");
+            images.forEach((img) => {
+              img.crossOrigin = "anonymous"; // Set CORS for images
+            });
+          },
+        }).then((canvas) => {
+          try {
+            // Try using toDataURL to get the image data from the canvas
+            const imgData = canvas.toDataURL("image/png");
+
+            const pdf = new jsPDF("p", "mm", "a4"); // Create a new PDF instance
+
+            // A4 page dimensions (in mm)
+            const pageWidth = 210; // A4 width in mm
+            const pageHeight = 297; // A4 height in mm
+            const margin = 10; // Margin around the page content
+
+            // Calculate the image's width and height while maintaining the aspect ratio
+            let imgWidth = pageWidth - 2 * margin; // Subtract margins to fit the page
+            let imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+            // If the image height exceeds the page height, scale it down
+            if (imgHeight > pageHeight - 2 * margin) {
+              imgHeight = pageHeight - 2 * margin; // Adjust image height
+              imgWidth = (canvas.width * imgHeight) / canvas.height; // Adjust image width
+            }
+
+            // Add the image to the PDF
+            pdf.addImage(imgData, "PNG", margin, margin, imgWidth, imgHeight);
+
+            // Save the generated PDF
+            pdf.save("Patient_Treatment_Plan.pdf");
+          } catch (error) {
+            // Fallback: Use toBlob if toDataURL fails
+            canvas.toBlob((blob) => {
+              const url = URL.createObjectURL(blob);
+
+              // Create a new PDF using the blob data
+              const pdf = new jsPDF("p", "mm", "a4");
+              const pageWidth = 210;
+              const pageHeight = 297;
+              const margin = 10;
+
+              // Image scaling logic
+              const imgWidth = pageWidth - 2 * margin;
+              const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+              pdf.addImage(url, "PNG", margin, margin, imgWidth, imgHeight);
+              pdf.save("Patient_Treatment_Plan.pdf");
+            }, "image/png");
+          }
+        });
+      }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  </head>
+
+  <body>
+    <!-- Navbar Section -->
+    <div class="navbar">
+      <div class="logo">
+        <a href="home.html">
+          <img src="../../Assest/logo.png" alt="Logo Image" />
+        </a>
+      </div>
+      <div class="nav-links">
+        <a href="#about">MRI Scanner</a>
+        <a href="Prescription.html">Prescription</a>
+        <a href="myd.html">Meet Your Doctor</a>
+      </div>
+      <div class="user-icons" id="userIcons">
+        <a href="../../User/udashboard.html" id="profileIcon"
+          ><i class="fas fa-user"></i
+        ></a>
+        <a href="../../Doctor/docdashboard.html" id="doctorIcon"
+          ><i class="fas fa-user-md"></i
+        ></a>
+        <a href="#" id="logoutButton"><i class="fas fa-sign-out-alt"></i></a>
+      </div>
+      <div class="login-button" id="loginButton">
+        <a href="../Login/login.html">Login</a>
+      </div>
+    </div>
+
+    <div class="form-container">
+      <div class="form-header">
+        <img src="../../Assest/preslogo.png" alt="Logo" class="logo" />
+      </div>
+
+      <h1>Patient Information Form</h1>
+      <p class="sub-heading">Record of a patient's medical details</p>
+
+      <form id="patientForm" onsubmit="generateTreatmentPlan(event)">
+        <!-- Patient Name -->
+        <label for="firstName">Patient Name</label>
+        <div class="name-field">
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            placeholder="First Name"
+            required
+          />
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            placeholder="Last Name"
+            required
+          />
+        </div>
+
+        <!-- Patient ID Number -->
+        <label for="patientId">Patient ID Number</label>
+        <input
+          type="text"
+          id="patientId"
+          name="patientId"
+          placeholder="Patient ID Number"
+          required
+        />
+
+        <!-- MRI Scan -->
+        <label for="mriScan">Patient MRI Scan</label>
+        <input
+          type="file"
+          id="mriScan"
+          name="mriScan"
+          accept="image/*"
+          onchange="displayImage(event)"
+        />
+        <div id="imagePreview"></div>
+
+        <!-- Age -->
+        <label for="age">Patient Age</label>
+        <select id="age" name="age">
+          <option value="select">Select</option>
+          <option value="0-12">0 - 12 (Child)</option>
+          <option value="13-18">13 - 18 (Teen)</option>
+          <option value="19-30">19 - 30 (Young Adult)</option>
+          <option value="31-45">31 - 45 (Adult)</option>
+          <option value="46+">46+ (Senior)</option>
+        </select>
+
+        <!-- Gender -->
+        <label>Patient Gender</label>
+        <div class="gender">
+          <input type="radio" id="male" name="gender" value="Male" />
+          <label for="male">Male</label>
+
+          <input type="radio" id="female" name="gender" value="Female" />
+          <label for="female">Female</label>
+        </div>
+
+        <!-- Tumor Type -->
+        <label>Patient Tumor Type</label>
+        <div class="tumor-type">
+          <input type="checkbox" id="glioma" name="tumorType" value="Glioma" />
+          <label for="glioma">Glioma</label>
+
+          <input
+            type="checkbox"
+            id="meningioma"
+            name="tumorType"
+            value="Meningioma"
+          />
+          <label for="meningioma">Meningioma</label>
+
+          <input
+            type="checkbox"
+            id="pituitary"
+            name="tumorType"
+            value="Pituitary"
+          />
+          <label for="pituitary">Pituitary</label>
+
+          <input
+            type="checkbox"
+            id="noTumor"
+            name="tumorType"
+            value="No Tumor"
+          />
+          <label for="noTumor">No Tumor</label>
+        </div>
+
+        <!-- Medical History -->
+        <label for="history">Patient Medical History</label>
+        <textarea id="history" name="history" rows="4" required></textarea>
+
+        <!-- Previous Treatments -->
+        <label for="treatments">Patient Previous Treatments</label>
+        <textarea
+          id="treatments"
+          name="treatments"
+          rows="4"
+          required
+        ></textarea>
+
+        <!-- Terms and Conditions -->
+        <div class="terms">
+          <input type="checkbox" id="terms" name="terms" required />
+          <label for="terms">I accept the Terms and Conditions.</label>
+        </div>
+
+        <h1>Genarate Your Treatment</h1>
+        <p class="sub-heading">Record of a patient's medical details</p>
+
+        <!-- Generate Button -->
+        <button type="submit" class="generate-btn">
+          Generate Your Treatment Plan
+        </button>
+      </form>
+
+      <div id="treatmentResult" class="diagnosis-box" style="display: none">
+        <h3>Recommended Treatment Plan</h3>
+        <p id="diagnosisText"></p>
+      </div>
+      <button
+        class="generate-pdf-btn"
+        id="generatePdfBtn"
+        type="button"
+        onclick="generatePDF(event)"
+        disabled
+      >
+        Generate PDF
+      </button>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+      <div class="footer-container">
+        <!-- Logo Section -->
+        <div class="footer-logo">
+          <a href="#">
+            <img src="../../Assest/footer logo.png" alt="Website Logo" />
+          </a>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#about">MRI Scanner</a></li>
+            <li><a href="Prescription.html">Prescription</a></li>
+            <li><a href="myd.html">Meet Your Doctor</a></li>
+          </ul>
+        </div>
+
+        <!-- Social Media -->
+        <div class="footer-social">
+          <h3>Follow Us</h3>
+          <div class="social-icons">
+            <a href="https://www.google.com" target="_blank"
+              ><i class="fab fa-google"></i
+            ></a>
+            <a href="https://www.twitter.com" target="_blank"
+              ><i class="fab fa-twitter"></i
+            ></a>
+            <a href="https://www.facebook.com" target="_blank"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="https://www.linkedin.com" target="_blank"
+              ><i class="fab fa-linkedin-in"></i
+            ></a>
+            <a href="https://www.github.com" target="_blank"
+              ><i class="fab fa-github"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>
+          &copy; 2024 NeuroLens. All rights reserved. | Designed and Developed
+          by Theekshana Thisura
+        </p>
+      </div>
+    </footer>
+
+    <script src="Prescription.js"></script>
+  </body>
+</html>

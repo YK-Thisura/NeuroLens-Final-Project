@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Doctor's Profile</title>
+    <link rel="stylesheet" href="docprofile.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="header-content">
+        <div class="logo">
+          <a href="../User/home.html">
+            <img src="../../Assest/doctor.png" alt="Logo" />
+          </a>
+        </div>
+        <h1 id="doctorName">Dr. Kavin Peter</h1>
+        <p>Welcome to your personalized profile!</p>
+      </div>
+    </header>
+
+    <main class="profile-container">
+      <div class="form-logo">
+        <img src="../../Assest/preslogo.png" alt="Small Logo" />
+      </div>
+      <div class="profile-header">
+        <div class="profile-image">
+          <img
+            src="../../Assest/doctor.png"
+            alt="Doctor's Profile Image"
+            class="profile-pic"
+          />
+        </div>
+        <div class="basic-info">
+          <h2>Dr. Theekshana Thisura</h2>
+          <p><strong>Age:</strong> 32</p>
+          <p><strong>Gender:</strong> Male</p>
+          <p><strong>Country:</strong> Sri Lanka</p>
+          <p><strong>Email:</strong> theekshana@example.com</p>
+          <p><strong>Contact:</strong> +94 777 123 456</p>
+        </div>
+      </div>
+
+      <section class="specialization">
+        <h2>Specializations</h2>
+        <ul>
+          <li>Glioma</li>
+          <li>Meningioma</li>
+          <li>Pituitary</li>
+        </ul>
+      </section>
+
+      <section class="qualification">
+        <h2>Highest Qualification</h2>
+        <p>PhD in Neurosurgery</p>
+      </section>
+
+      <section class="description">
+        <h2>About Dr. Theekshana</h2>
+        <p>
+          Dr. Theekshana Thisura is a highly experienced neurosurgeon with a
+          specialization in treating brain tumors, including Glioma, Meningioma,
+          and Pituitary conditions. With years of medical practice, Dr.
+          Theekshana ensures the best care for patients, employing the latest
+          medical advancements.
+        </p>
+      </section>
+
+      <section class="upload-prescription">
+        <h2>Upload Prescription</h2>
+        <p>Please upload the relevant prescription below:</p>
+        <form id="uploadForm" enctype="multipart/form-data">
+          <label for="prescription">Choose Prescription File:</label>
+          <input type="hidden" id="doctor_id" name="doctor_id" />
+          <input type="file" id="prescription" name="prescription" required />
+          <button type="submit" class="submit-btn">Submit</button>
+        </form>
+      </section>
+    </main>
+    <script src="docprofile.js"></script>
+  </body>
+</html>
