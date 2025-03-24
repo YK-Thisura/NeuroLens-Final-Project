@@ -21,7 +21,7 @@ app = Flask(__name__)
 CORS(app)
 
 bcrypt = Bcrypt(app)
-app.config['JWT_SECRET_KEY'] = 'your_secret_key'  # Change this to a strong secret key
+app.config['JWT_SECRET_KEY'] = 'your_secret_key'  
 jwt = JWTManager(app)
 
 # Load the trained model

@@ -89,7 +89,7 @@ body {
   background: #fff;
   border-radius: 10px; /* Slightly smaller radius */
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08); /* Softer shadow */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Softer shadow */
   width: 260px; /* Smaller width */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }

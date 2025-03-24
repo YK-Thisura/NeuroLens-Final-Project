@@ -16,20 +16,18 @@
       // Image Preview
 
       function displayImage(event) {
-        const file = event.target.files[0]; // Get the selected file
-        const imagePreview = document.getElementById("imagePreview"); // Image preview container
+        const file = event.target.files[0];
+        const imagePreview = document.getElementById("imagePreview");
 
         if (file) {
           const reader = new FileReader();
 
           reader.onload = function (e) {
-            // Display the image
             imagePreview.innerHTML = `<img src="${e.target.result}" alt="Selected MRI Scan">`;
           };
 
           reader.readAsDataURL(file);
         } else {
-          // Clear the preview if no file is selected
           imagePreview.innerHTML = "";
         }
       }
@@ -55,118 +53,113 @@
           treatmentPlan = ""; // Reset treatmentPlan
 
           tumorTypes.forEach((tumor) => {
-            // Glioma Treatments
             if (tumor === "Glioma") {
               if (age === "0-12") {
-                treatmentPlan += `For a child with Glioma, consult a pediatric oncologist and plan an MRI follow-up.\n`;
+                treatmentPlan += `For a child with Glioma, consult a pediatric neuro-oncologist. MRI and biopsy should be performed to assess tumor grade. Consider targeted therapy if genetic markers indicate susceptibility. Chemotherapy is often preferred over radiation due to long-term risks in children.\n`;
                 if (gender === "Male")
-                  treatmentPlan += `  Special consideration: Pediatric neurology for boys.\n`;
+                  treatmentPlan += `  Special consideration: Monitor for developmental delays and cognitive impairments.\n`;
                 if (gender === "Female")
-                  treatmentPlan += `  Special consideration: Hormonal assessment for girls.\n`;
+                  treatmentPlan += `  Special consideration: Assess impact on endocrine function and puberty.\n`;
               } else if (age === "13-18") {
-                treatmentPlan += `For a teen with Glioma, consider radiation therapy and a follow-up scan.\n`;
+                treatmentPlan += `For a teen with Glioma, perform advanced imaging and molecular profiling to determine the best course of action. Surgery followed by radiation and chemotherapy may be needed.\n`;
                 if (gender === "Male")
-                  treatmentPlan += `  Special consideration: Monitor aggressive growth patterns in boys.\n`;
+                  treatmentPlan += `  Special consideration: Monitor for aggressive growth and neurological deficits.\n`;
                 if (gender === "Female")
-                  treatmentPlan += `  Special consideration: Support with hormone stabilization during puberty.\n`;
+                  treatmentPlan += `  Special consideration: Address potential hormonal disruptions during puberty.\n`;
               } else if (age === "19-30") {
-                treatmentPlan += `For a young adult with Glioma, surgical resection followed by chemotherapy is advised.\n`;
+                treatmentPlan += `For a young adult with Glioma, treatment involves surgical resection when feasible, followed by radiation and temozolomide chemotherapy. Consider clinical trials for novel therapies.\n`;
                 if (gender === "Male")
-                  treatmentPlan += `  Special consideration: Higher risk of recurrence in males.\n`;
+                  treatmentPlan += `  Special consideration: Higher recurrence rate; routine follow-up with MRI every 3-6 months.\n`;
                 if (gender === "Female")
-                  treatmentPlan += `  Special consideration: Fertility preservation counseling for females.\n`;
+                  treatmentPlan += `  Special consideration: Evaluate fertility preservation before initiating chemotherapy.\n`;
               } else if (age === "31-45") {
-                treatmentPlan += `For an adult with Glioma, advanced imaging and targeted therapy are recommended.\n`;
+                treatmentPlan += `For an adult with Glioma, surgical intervention, radiation therapy, and targeted therapy (e.g., bevacizumab) may be recommended based on tumor genetics.\n`;
                 if (gender === "Male")
-                  treatmentPlan += `  Special consideration: Evaluate cognitive impairments specific to males.\n`;
+                  treatmentPlan += `  Special consideration: Assess cognitive function post-radiation.\n`;
                 if (gender === "Female")
-                  treatmentPlan += `  Special consideration: Monitor for hormonal imbalances in females.\n`;
+                  treatmentPlan += `  Special consideration: Monitor hormonal balance and osteoporosis risk.\n`;
               } else if (age === "46+") {
-                treatmentPlan += `For a senior with Glioma, palliative care and low-dose chemotherapy are considered.\n`;
+                treatmentPlan += `For a senior with Glioma, consider palliative radiation therapy, low-dose chemotherapy, and symptom management. Quality of life should be prioritized.\n`;
                 if (gender === "Male")
-                  treatmentPlan += `  Special consideration: Evaluate co-morbidities like hypertension in males.\n`;
+                  treatmentPlan += `  Special consideration: Manage cardiovascular comorbidities.\n`;
                 if (gender === "Female")
-                  treatmentPlan += `  Special consideration: Manage osteoporosis or bone fragility in females.\n`;
+                  treatmentPlan += `  Special consideration: Monitor bone density and fall risk.\n`;
               }
             }
 
             // Meningioma Treatments
             if (tumor === "Meningioma") {
               if (age === "0-12") {
-                treatmentPlan += `For a child with Meningioma, early surgical intervention is recommended.\n`;
+                treatmentPlan += `For a child with Meningioma, surgical intervention is the preferred option. Consider proton therapy for residual or inoperable tumors.\n`;
                 if (gender === "Male")
-                  treatmentPlan += `  Special consideration: Pediatric neurosurgery expertise for boys.\n`;
+                  treatmentPlan += `  Special consideration: Neurological assessment for motor function impact.\n`;
                 if (gender === "Female")
-                  treatmentPlan += `  Special consideration: Evaluate girls for developmental delays.\n`;
+                  treatmentPlan += `  Special consideration: Monitor for hormonal effects due to tumor location.\n`;
               } else if (age === "13-18") {
-                treatmentPlan += `For a teen with Meningioma, focus on observation or minimally invasive surgery.\n`;
+                treatmentPlan += `For a teen with Meningioma, surgical resection is the primary treatment. Observation with MRI every 6 months may be advised for small, asymptomatic tumors.\n`;
                 if (gender === "Male")
-                  treatmentPlan += `  Special consideration: Monitor bone growth effects in boys.\n`;
+                  treatmentPlan += `  Special consideration: Monitor bone growth and recovery post-surgery.\n`;
                 if (gender === "Female")
-                  treatmentPlan += `  Special consideration: Hormonal therapy may benefit girls.\n`;
+                  treatmentPlan += `  Special consideration: Evaluate estrogen receptor status of tumor for targeted therapy.\n`;
               } else if (age === "19-30") {
-                treatmentPlan += `For a young adult with Meningioma, radiation therapy or surgical removal is suggested.\n`;
+                treatmentPlan += `For a young adult with Meningioma, radiation therapy or radiosurgery (e.g., Gamma Knife) is an option for tumors unsuitable for surgery.\n`;
                 if (gender === "Male")
-                  treatmentPlan += `  Special consideration: Assess occupational impacts on males.\n`;
+                  treatmentPlan += `  Special consideration: Assess work-life impact and neurocognitive function.\n`;
                 if (gender === "Female")
-                  treatmentPlan += `  Special consideration: Plan pregnancy-safe therapies if required.\n`;
+                  treatmentPlan += `  Special consideration: Address pregnancy planning and safe treatment options.\n`;
               } else if (age === "31-45") {
-                treatmentPlan += `For an adult with Meningioma, surgical intervention or radiation is advised.\n`;
+                treatmentPlan += `For an adult with Meningioma, surgical excision is recommended, followed by adjuvant radiation if needed.\n`;
                 if (gender === "Male")
-                  treatmentPlan += `  Special consideration: Review fitness for strenuous activity.\n`;
+                  treatmentPlan += `  Special consideration: Assess for residual tumor growth using MRI every year.\n`;
                 if (gender === "Female")
-                  treatmentPlan += `  Special consideration: Monitor for hormonal interactions with therapies.\n`;
+                  treatmentPlan += `  Special consideration: Consider anti-estrogen therapy for hormone-sensitive tumors.\n`;
               } else if (age === "46+") {
-                treatmentPlan += `For a senior with Meningioma, non-invasive treatments like proton therapy are recommended.\n`;
+                treatmentPlan += `For a senior with Meningioma, prioritize non-invasive treatments such as stereotactic radiosurgery and hormone therapy where applicable.\n`;
                 if (gender === "Male")
-                  treatmentPlan += `  Special consideration: Prioritize cardiovascular health for males.\n`;
+                  treatmentPlan += `  Special consideration: Focus on maintaining mobility and cognitive function.\n`;
                 if (gender === "Female")
-                  treatmentPlan += `  Special consideration: Bone health considerations for elderly females.\n`;
+                  treatmentPlan += `  Special consideration: Prevent osteoporosis and balance issues.\n`;
               }
             }
 
             // Pituitary Tumor Treatments
             if (tumor === "Pituitary") {
               if (age === "0-12") {
-                treatmentPlan += `For a child with Pituitary tumor, hormonal therapy evaluation is suggested.\n`;
+                treatmentPlan += `For a child with a Pituitary tumor, endocrinology consultation is required for hormone management. MRI and vision assessment should be performed regularly.\n`;
                 if (gender === "Male")
-                  treatmentPlan += `  Special consideration: Evaluate for stunted growth in boys.\n`;
+                  treatmentPlan += `  Special consideration: Monitor testosterone levels and potential growth hormone deficiencies.\n`;
                 if (gender === "Female")
-                  treatmentPlan += `  Special consideration: Hormonal therapy tailored for girls.\n`;
+                  treatmentPlan += `  Special consideration: Assess for early-onset puberty and estrogen imbalances.\n`;
               } else if (age === "13-18") {
-                treatmentPlan += `For a teen with Pituitary tumor, hormonal and vision assessments are recommended.\n`;
+                treatmentPlan += `For a teen with a Pituitary tumor, medication such as dopamine agonists may be used before considering surgery.\n`;
                 if (gender === "Male")
-                  treatmentPlan += `  Special consideration: Testosterone imbalance monitoring for boys.\n`;
+                  treatmentPlan += `  Special consideration: Track testosterone levels and muscle development.\n`;
                 if (gender === "Female")
-                  treatmentPlan += `  Special consideration: Address potential menstrual disruptions.\n`;
+                  treatmentPlan += `  Special consideration: Monitor menstrual cycle irregularities.\n`;
               } else if (age === "19-30") {
-                treatmentPlan += `For a young adult with Pituitary tumor, evaluate for transsphenoidal surgery.\n`;
+                treatmentPlan += `For a young adult with a Pituitary tumor, transsphenoidal surgery is the primary treatment option. Radiation therapy is considered for non-resectable tumors.\n`;
                 if (gender === "Male")
-                  treatmentPlan += `  Special consideration: Higher risk of vision loss in males.\n`;
+                  treatmentPlan += `  Special consideration: Monitor libido and potential infertility issues.\n`;
                 if (gender === "Female")
-                  treatmentPlan += `  Special consideration: Pregnancy-safe planning for females.\n`;
+                  treatmentPlan += `  Special consideration: Assess pregnancy planning and hormonal therapy options.\n`;
               } else if (age === "31-45") {
-                treatmentPlan += `For an adult with Pituitary tumor, hormonal therapy and surgery are common options.\n`;
+                treatmentPlan += `For an adult with a Pituitary tumor, lifelong hormone replacement therapy may be needed post-surgery.\n`;
                 if (gender === "Male")
-                  treatmentPlan += `  Special consideration: Monitor for sleep apnea in males.\n`;
+                  treatmentPlan += `  Special consideration: Monitor metabolic rate and testosterone therapy.\n`;
                 if (gender === "Female")
-                  treatmentPlan += `  Special consideration: Manage prolactin imbalance for females.\n`;
+                  treatmentPlan += `  Special consideration: Evaluate osteoporosis risk due to estrogen deficiency.\n`;
               } else if (age === "46+") {
-                treatmentPlan += `For a senior with Pituitary tumor, regular monitoring and minimal surgery are suggested.\n`;
+                treatmentPlan += `For a senior with a Pituitary tumor, conservative management with medication is often preferred unless the tumor is causing significant symptoms.\n`;
                 if (gender === "Male")
-                  treatmentPlan += `  Special consideration: Evaluate for coexisting diabetes in males.\n`;
+                  treatmentPlan += `  Special consideration: Assess cardiovascular risks related to hormone therapy.\n`;
                 if (gender === "Female")
-                  treatmentPlan += `  Special consideration: Post-menopause hormone therapy for females.\n`;
+                  treatmentPlan += `  Special consideration: Manage osteoporosis risk and cardiovascular health.\n`;
               }
             }
 
             // No Tumor Detected
             if (tumor === "No Tumor") {
-              treatmentPlan += `No tumor detected. Suggest routine health checkups and a balanced lifestyle.\n`;
-              if (gender === "Male")
-                treatmentPlan += `  Special consideration: Encourage regular physical activity for males.\n`;
-              if (gender === "Female")
-                treatmentPlan += `  Special consideration: Focus on calcium and vitamin D intake for females.\n`;
+              treatmentPlan += `No tumor detected. Routine health checkups and a balanced lifestyle are recommended.\n`;
             }
           });
         }

@@ -103,7 +103,7 @@ signInForm.addEventListener("submit", async (event) => {
   ).value;
 
   // Check for admin credentials
-  if (email === "admin@123" && password === "1234") {
+  if (email === "admin@gmail.com" && password === "12345") {
     localStorage.setItem("role", "admin");
     Swal.fire({
       icon: "success",
